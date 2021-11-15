@@ -3,8 +3,6 @@ package frc.team5115.Subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team5115.Robot.RobotContainer;
 
@@ -39,10 +37,10 @@ public class Drivetrain extends SubsystemBase{
     }
 
     public void stop() {
-        drive(0, 0, 0);
+        TankDrive(0, 0, 0);
     }
 
-    public void drive(double x, double y, double throttle) { 
+    public void TankDrive(double x, double y, double throttle) { 
         System.out.println("x = " + x);
         System.out.println("y = " + y);
         leftSpd = (x-y) * throttle;
@@ -55,7 +53,7 @@ public class Drivetrain extends SubsystemBase{
         backLeft.set(ControlMode.PercentOutput, leftSpd);
         backRight.set(ControlMode.PercentOutput, rightSpd);
     }
-    public void simpleDrive(double y, double x, double z) {
+    public void MecanumSimpleDrive(double y, double x, double z) {
         frontLeftSpeed = (-x + y + z);
         backLeftSpeed = (-x + y - z);
         frontRightSpeed = (x +  y + z);
@@ -80,21 +78,7 @@ public class Drivetrain extends SubsystemBase{
         backRight.set(ControlMode.PercentOutput, 0.5);
     }
 
-    public void XBoxDrive(Joystick joy) {
-        double x = joy.getRawAxis(XBOX_X_AXIS_ID);
-        double y = -joy.getRawAxis(XBOX_Y_AXIS_ID);
-
-        double throttle1 = joy.getRawAxis(XBOX_THROTTLE_1_ID);
-        double throttle2 = joy.getRawAxis(XBOX_THROTTLE_2_ID);
-
-        //throttle is between 0.5 and 1
-        double throttle = (1 - throttle1) + (1 - throttle2);
-        throttle /= 2;
-        //throttle is between 0 (dont move) and 1, (full move)
-        throttle = ((1 - MIN_XBOX_THROTTLE) * throttle) + MIN_XBOX_THROTTLE;
     
-    }
-
 }
 
 

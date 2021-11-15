@@ -12,8 +12,6 @@ import frc.team5115.Robot.*;
 
 public class RobotContainer {
 
-    // The robot's subsystems and commands are defined here...
-    //Subsystems
     public Drivetrain drivetrain;
     public final Shooter shooter = new Shooter();
     public final Intake intake = new Intake();
@@ -25,8 +23,6 @@ public class RobotContainer {
   
 
     public RobotContainer() {
-        // Configure the button bindings
-        //sets the navx to work.
         drivetrain = new Drivetrain(this);
         configureButtonBindings();
     }
@@ -55,8 +51,7 @@ public class RobotContainer {
 
         @Override
         public void execute() {
-           drivetrain.simpleDrive(joystick.getRawAxis(XBOX_X_AXIS_ID), joystick.getRawAxis(XBOX_Y_AXIS_ID), joystick.getRawAxis(XBOX_Z_AXIS_ID));
-            //drivetrain.drive(-.5, -.5, 1);
+           drivetrain.MecanumSimpleDrive(joystick.getRawAxis(JOY_X_AXIS_ID), joystick.getRawAxis(JOY_Y_AXIS_ID), joystick.getRawAxis(JOY_Z_AXIS_ID));
         }
     }
 /*
@@ -85,7 +80,6 @@ public class RobotContainer {
         return DriveForward;
     }
     public void startTeleop(){
-            //bind the wheels.
             System.out.println("Starting teleop");
         }
 
