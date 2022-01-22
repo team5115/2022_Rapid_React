@@ -12,17 +12,27 @@ import frc.team5115.Robot.*;
 public class RobotContainer {
 
     public Drivetrain drivetrain;
+    public Intake intake;
+    public Shooter shooter;
+    public Feeder feeder;
+    public Climber climber;
     public final Joystick joy = new Joystick(0);
 
     public RobotContainer() {
         drivetrain = new Drivetrain();
+        intake = new Intake();
+        shooter = new Shooter();
+        feeder = new Feeder();
+        climber = new Climber();
         configureButtonBindings();
     }
 
     private void configureButtonBindings() {
-        //drivetrain.MecanumSimpleDrive(joy.getRawAxis(JOY_X_AXIS_ID), joy.getRawAxis(JOY_Y_AXIS_ID), joy.getRawAxis(JOY_Z_AXIS_ID));
-        //drivetrain.FieldOrientedDrive(joy.getRawAxis(JOY_X_AXIS_ID), joy.getRawAxis(JOY_Y_AXIS_ID));
-        drivetrain.setDefaultCommand(new driveDefaultCommand(drivetrain, joy).perpetually());  
+       new JoystickButton( joy, INTAKE_BUTTON_ID).whileHeld(new InstantCommand(intake::forwardIntake).alongWith(new InstantCommand(feeder::forwardFeeder))).whenReleased(new InstantCommand(intake::stop).alongWith(new InstantCommand(feeder::stop)));
+       new JoystickButton(joy, SHOOTER_BUTTON_ID).whileHeld(new InstantCommand(shooter::forwardShoot)).whenReleased(new InstantCommand(shooter::stop));
+       new JoystickButton(joy, CLIMBER_BUTTON_ID).whileHeld(new InstantCommand(climber::forwardClimb)).whenReleased(new InstantCommand(climber::stop));
+
+       drivetrain.setDefaultCommand(new driveDefaultCommand(drivetrain, joy).perpetually());  
     }
 
    static class driveDefaultCommand extends CommandBase {
@@ -40,8 +50,8 @@ public class RobotContainer {
            //drivetrain.MecanumSimpleDrive(joy.getRawAxis(JOY_X_AXIS_ID), joy.getRawAxis(JOY_Y_AXIS_ID), joy.getRawAxis(JOY_Z_AXIS_ID));
            //System.out.println("starting drive train");
            //drivetrain.autodrive();
-           drivetrain.TankDrive(0.3,0.3,1);
-          // drivetrain.FieldOrientedDrive(joy.getRawAxis(JOY_X_AXIS_ID), joy.getRawAxis(JOY_Y_AXIS_ID));
+        //drivetrain.TankDrive(0.3,0.3,1);
+          drivetrain.FieldOrientedDrive(joy.getRawAxis(JOY_X_AXIS_ID), joy.getRawAxis(JOY_Y_AXIS_ID));
             
         }    
     }
