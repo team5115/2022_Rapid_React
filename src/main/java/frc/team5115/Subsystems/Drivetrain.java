@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team5115.Robot.RobotContainer;
 
 import static frc.team5115.Constants.*;
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 
 public class Drivetrain extends SubsystemBase{
 
@@ -23,12 +26,18 @@ public class Drivetrain extends SubsystemBase{
     private double rightSpd;
     private double leftSpd;
 
+    private AHRS gyro;
+    
 
-    public Drivetrain(RobotContainer x) {
+
+    public Drivetrain() {
         frontLeft = new TalonSRX(FRONT_LEFT_MOTOR_ID);
         frontRight = new TalonSRX(FRONT_RIGHT_MOTOR_ID);
         backLeft = new TalonSRX(BACK_LEFT_MOTOR_ID);
         backRight = new TalonSRX(BACK_RIGHT_MOTOR_ID);
+
+        gyro= new AHRS(SPI.Port.kMXP);
+        
 
         frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
@@ -41,12 +50,8 @@ public class Drivetrain extends SubsystemBase{
     }
 
     public void TankDrive(double x, double y, double throttle) { 
-        System.out.println("x = " + x);
-        System.out.println("y = " + y);
         leftSpd = (x-y) * throttle;
         rightSpd = (x+y) * throttle;
-        System.out.println("Setting Right Pair to :" + (int) rightSpd * 100);
-        System.out.println("Setting Left Pair to :" + (int) leftSpd * 100);
 
         frontLeft.set(ControlMode.PercentOutput, leftSpd);
         frontRight.set(ControlMode.PercentOutput, rightSpd);
@@ -54,10 +59,12 @@ public class Drivetrain extends SubsystemBase{
         backRight.set(ControlMode.PercentOutput, rightSpd);
     }
     public void MecanumSimpleDrive(double y, double x, double z) {
+    
         frontLeftSpeed = (-x + y + z);
         backLeftSpeed = (-x + y - z);
         frontRightSpeed = (x +  y + z);
         backRightSpeed = (x + y - z);
+
        /*
         frontLeftSpeed = (-y + x + z);
         backLeftSpeed = (-y + x - z);
@@ -68,6 +75,38 @@ public class Drivetrain extends SubsystemBase{
         frontRight.set(ControlMode.PercentOutput, frontRightSpeed);
         backLeft.set(ControlMode.PercentOutput, backLeftSpeed);
         backRight.set(ControlMode.PercentOutput, backRightSpeed);
+    }
+
+    public void FieldOrientedDrive(double strafe, double fwd){
+        double x;
+        double y;
+        double pi = 3.1415926;
+        float gyro_degrees = gyro.getYaw();
+        double gyro_radians = gyro_degrees * pi/180; 
+  //      y = fwd * Math.cos(gyro_radians) + strafe * Math.sin(gyro_radians);
+  //      x = -fwd * Math.sin(gyro_radians) +  strafe * Math.cos(gyro_radians);
+
+        x = strafe*Math.cos(gyro_radians) - fwd*Math.sin(gyro_radians);
+        y = strafe*Math.sin(gyro_radians) - fwd*Math.cos(gyro_radians);
+
+        frontLeftSpeed = (y + x);
+        backLeftSpeed = (y - x);
+        frontRightSpeed = (-y + x);
+        backRightSpeed = (-y - x);
+/*
+
+        frontLeftSpeed = (-y + x);
+        backLeftSpeed = (-y + x);
+        frontRightSpeed = (y + x);
+        backRightSpeed = (y + x);
+       
+        System.out.println(gyro.getYaw());
+        */
+        frontLeft.set(ControlMode.PercentOutput, frontLeftSpeed);
+        frontRight.set(ControlMode.PercentOutput, frontRightSpeed);
+        backLeft.set(ControlMode.PercentOutput, backLeftSpeed);
+        backRight.set(ControlMode.PercentOutput, backRightSpeed);
+        
     }
 
     public void autodrive(){
