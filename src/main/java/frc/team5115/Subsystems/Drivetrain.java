@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team5115.Robot.RobotContainer;
+import edu.wpi.first.wpilibj.Encoder; 
 
 import static frc.team5115.Constants.*;
 import com.kauailabs.navx.frc.AHRS;
@@ -27,6 +28,7 @@ public class Drivetrain extends SubsystemBase{
     private double leftSpd;
 
     private AHRS gyro;
+    private Encoder encoder;
     
 
 
@@ -37,8 +39,10 @@ public class Drivetrain extends SubsystemBase{
         backRight = new TalonSRX(BACK_RIGHT_MOTOR_ID);
 
         gyro= new AHRS(SPI.Port.kMXP);
+        encoder = new Encoder(0,1);
+        encoder.reset();
+        gyro.resetDisplacement();
         
-
         frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         backLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
@@ -77,7 +81,7 @@ public class Drivetrain extends SubsystemBase{
         backRight.set(ControlMode.PercentOutput, backRightSpeed);
     }
 
-    public void FieldOrientedDrive(double strafe, double fwd){
+    public void FieldOrientedDrive(double strafe, double fwd, double rotate){
         double x;
         double y;
         double pi = 3.1415926;
@@ -86,13 +90,13 @@ public class Drivetrain extends SubsystemBase{
   //      y = fwd * Math.cos(gyro_radians) + strafe * Math.sin(gyro_radians);
   //      x = -fwd * Math.sin(gyro_radians) +  strafe * Math.cos(gyro_radians);
 
-        x = strafe*Math.cos(gyro_radians) - fwd*Math.sin(gyro_radians);
+        x = strafe*Math.cos(gyro_radians) + fwd*Math.sin(gyro_radians);
         y = strafe*Math.sin(gyro_radians) - fwd*Math.cos(gyro_radians);
 
-        frontLeftSpeed = (y + x);
-        backLeftSpeed = (y - x);
-        frontRightSpeed = (-y + x);
-        backRightSpeed = (-y - x);
+        frontLeftSpeed = (y + x + rotate);
+        backLeftSpeed = (y - x + rotate);
+        frontRightSpeed = (-y + x + rotate);
+        backRightSpeed = (-y - x + rotate);
 /*
 
         frontLeftSpeed = (-y + x);
@@ -115,6 +119,11 @@ public class Drivetrain extends SubsystemBase{
         frontRight.set(ControlMode.PercentOutput, 0.5);
         backLeft.set(ControlMode.PercentOutput, 0.5);
         backRight.set(ControlMode.PercentOutput, 0.5);
+    }
+
+    public void getDistance(){
+        Systme.
+        //System.out.println(100*gyro.getDisplacementX());
     }
 
     

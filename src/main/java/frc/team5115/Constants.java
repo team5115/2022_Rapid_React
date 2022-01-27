@@ -22,8 +22,8 @@ public class Constants{
 
     //X-Box
     public static int JOY_Y_AXIS_ID = 1;
-    public static int JOY_X_AXIS_ID = 4;
-    public static int JOY_Z_AXIS_ID = 0; 
+    public static int JOY_X_AXIS_ID = 0;
+    public static int JOY_Z_AXIS_ID = 4; 
     public static int INTAKE_BUTTON_ID = 1;
     public static int SHOOTER_BUTTON_ID = 2;
     public static int CLIMBER_BUTTON_ID =3;

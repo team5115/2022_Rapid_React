@@ -47,11 +47,12 @@ public class RobotContainer {
 
         @Override
         public void execute() {
-           //drivetrain.MecanumSimpleDrive(joy.getRawAxis(JOY_X_AXIS_ID), joy.getRawAxis(JOY_Y_AXIS_ID), joy.getRawAxis(JOY_Z_AXIS_ID));
+            drivetrain.MecanumSimpleDrive(joy.getRawAxis(4), joy.getRawAxis(1), joy.getRawAxis(0));
+            drivetrain.getDistance();
            //System.out.println("starting drive train");
            //drivetrain.autodrive();
-        //drivetrain.TankDrive(0.3,0.3,1);
-          drivetrain.FieldOrientedDrive(joy.getRawAxis(JOY_X_AXIS_ID), joy.getRawAxis(JOY_Y_AXIS_ID));
+           //drivetrain.TankDrive(0.3,0.3,1);
+           //drivetrain.FieldOrientedDrive(joy.getRawAxis(JOY_X_AXIS_ID), joy.getRawAxis(JOY_Y_AXIS_ID), joy.getRawAxis(JOY_Z_AXIS_ID));
             
         }    
     }
