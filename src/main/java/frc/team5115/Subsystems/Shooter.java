@@ -13,8 +13,8 @@ public class Shooter {
     //base line speed = .75
 
     public Shooter(){
-        leftShooter = new TalonSRX(1);
-        rightShooter = new TalonSRX(2);
+        leftShooter = new TalonSRX(LEFT_SHOOTER_MOTOR_ID);
+        rightShooter = new TalonSRX(RIGHT_SHOOTER_MOTOR_ID);
     }
 
     public void forwardShoot(){

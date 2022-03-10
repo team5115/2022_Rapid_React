@@ -10,31 +10,41 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.team5115.Subsystems.*;
 import static frc.team5115.Constants.*;
 import frc.team5115.Robot.*;
+import edu.wpi.first.wpilibj.Timer;
+
 
 public class AdjustDistanceToBall extends CommandBase{
 
     Drivetrain drivetrain;
-    public AdjustDistanceToBall(Drivetrain drivetrain){
+    Intake intake;
+    public AdjustDistanceToBall(Drivetrain drivetrain, Intake intake){
         this.drivetrain = drivetrain;
+        this.intake = intake;
     }
 
 
     @Override
+        public void initialize(){
+        }
+
+    @Override
         public void execute() {
-            drivetrain.AdjustDistanceToBall();
+            intake.forwardIntake();
+            drivetrain.autodrive();
+            
+        }
+
+        @Override 
+        public void end(boolean interupted){
+            drivetrain.stop();
+            intake.stop();
         }
     @Override
         public boolean isFinished() {
-            /*if(intake.ballDetection){
-                return true;
-            }
-            else{
+                if(drivetrain.backLeftEncoder > 200){
+                    return true;
+                }
                 return false;
             }
-            */
-            if(drivetrain.AverageDistanceDetector1 < 10){
-                return true;
-            }
-            return false;
-        }
+    
 }

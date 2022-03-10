@@ -16,6 +16,7 @@ public class Shoot extends CommandBase{
 
     public void initialize() {
        timer.reset();
+       timer.start();
     }
 
     public void execute() {
@@ -23,7 +24,7 @@ public class Shoot extends CommandBase{
     }
 
     public boolean isFinished() {
-        if(timer.get()<2){
+        if(timer.get()<.75){
         return false;
         }
         else{

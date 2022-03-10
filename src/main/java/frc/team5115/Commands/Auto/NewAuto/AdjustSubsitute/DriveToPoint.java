@@ -1,4 +1,4 @@
-package frc.team5115.Commands.Auto.NewAuto.BallFinder;
+package frc.team5115.Commands.Auto.NewAuto.AdjustSubsitute;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -10,31 +10,37 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.team5115.Subsystems.*;
 import static frc.team5115.Constants.*;
 import frc.team5115.Robot.*;
+import edu.wpi.first.wpilibj.Timer;
 
-public class AdjustAngleToBall extends CommandBase{
+
+public class DriveToPoint extends CommandBase{
 
     Drivetrain drivetrain;
-    public AdjustAngleToBall(Drivetrain drivetrain){
+    public DriveToPoint(Drivetrain drivetrain){
         this.drivetrain = drivetrain;
     }
 
 
     @Override
-        public void execute() {
-            drivetrain.AdjustAngleToBall();
+        public void initialize(){
         }
 
-    @Override 
+    @Override
+        public void execute() {
+            drivetrain.backwardsdrive();
+            
+        }
+
+        @Override 
         public void end(boolean interupted){
-            System.out.println("@meh");
+            drivetrain.stop();
         }
     @Override
         public boolean isFinished() {
-            if(drivetrain.balldetected){
-                return true;
-            }
-            else{
+                if(drivetrain.backLeftEncoder < 70){
+                    return true;
+                }
                 return false;
             }
-        }
+    
 }

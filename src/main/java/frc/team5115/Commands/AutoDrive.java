@@ -29,10 +29,9 @@ public class AutoDrive extends CommandBase {
     }
     
     public boolean isFinished() {
-        if(timer.get()>5){
+        if(drivetrain.backLeftEncoder > 330 && drivetrain.backRightEncoder > 330){
             return true;
         }
-            return false;
-        //return drivetrain.autoDriveFinished();
-      }
+        return false;
+    }
 }

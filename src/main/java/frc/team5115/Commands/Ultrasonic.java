@@ -16,11 +16,12 @@ public class Ultrasonic extends CommandBase{
 
     @Override
         public void execute() {
-            drivetrain.DistanceDetectionAverage();
+            //drivetrain.DistanceDetectionAverage();
+            drivetrain.printEncoderDistance();
         }
     @Override
         public boolean isFinished() {
-            return true;
+            return false;
         }
 
     

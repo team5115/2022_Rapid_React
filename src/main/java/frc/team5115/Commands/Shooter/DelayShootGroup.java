@@ -14,8 +14,9 @@ public class DelayShootGroup extends SequentialCommandGroup{
 
         addCommands(
             //go to intake ball
+            new ReverseFeeder(feeder),
             new Shoot(shooter),
-            new AllShoot(intake, feeder, shooter)
+            new AutoShoot(intake, feeder, shooter)
         );
     }
 }

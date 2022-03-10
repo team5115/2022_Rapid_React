@@ -12,15 +12,15 @@ public class Intake extends SubsystemBase{
     private TalonSRX intake;
     private double intakeSpeed = 0.5;
     public ColorSensorV3 colorSensor;
-   // public ColorSensorV3 colorSensor2;
-   // private final I2C.Port i2cPort = I2C.Port.kOnboard;
-   // private final I2C.Port i2cPort2 = I2C.Port.kMXP;
+    public static ColorSensorV3 mainColorSensor;
+    //private final I2C.Port i2cPort = I2C.Port.kOnboard;
+    private final I2C.Port i2cPort2 = I2C.Port.kMXP;
     private int ballProximity = 60;
 
     public Intake(){
         intake = new TalonSRX(INTAKE_MOTOR_ID);
-     //   colorSensor = new ColorSensorV3(i2cPort);
-      //  colorSensor2 = new ColorSensorV3(i2cPort2);
+        //colorSensor = new ColorSensorV3(i2cPort);
+        mainColorSensor = new ColorSensorV3(i2cPort2);
         
     }
 
@@ -28,7 +28,7 @@ public class Intake extends SubsystemBase{
         intake.set(ControlMode.PercentOutput, intakeSpeed);
 
 
-      //  System.out.println("color sensor:  "+colorSensor.getProximity());
+       //System.out.println("color sensor:  " +colorSensor.getProximity());
     }
 
     public void reverseIntake(){
@@ -37,17 +37,19 @@ public class Intake extends SubsystemBase{
 
     public void stop(){
         intake.set(ControlMode.PercentOutput, 0);
-      //  System.out.println("color sensor off");
+        System.out.println("color sensor off");
     }
-    /*
+    
+    public void colorPrint(){
+        System.out.println("color sensor: " + mainColorSensor.getProximity());
+    }
+
     public boolean ballDetection(){
-        if(colorSensor.getProximity()>ballProximity||colorSensor2.getProximity()>ballProximity){
+        if(mainColorSensor.getProximity()>ballProximity){
             return true;
         }
-        else{
-            return false;
-        }
+        return false;
     }
-    */
+    
     
 }

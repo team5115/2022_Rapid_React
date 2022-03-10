@@ -1,10 +1,12 @@
 package frc.team5115.Commands.Auto.NewAuto;
 //import frc.team5115.Commands.Intake.*;
-import frc.team5115.Commands.Shooter.AllShoot;
+import frc.team5115.Commands.Shooter.AutoShoot;
+import frc.team5115.Commands.Shooter.DelayShootGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.team5115.Commands.Stopeverything;
 import frc.team5115.Commands.AutoDrive;
 import frc.team5115.Commands.Auto.NewAuto.Adjust.AdjustDriveCommandGroup;
+import frc.team5115.Commands.Auto.NewAuto.AdjustSubsitute.DriveToPoint;
 import frc.team5115.Commands.Auto.NewAuto.BallFinder.AdjustRobotToBallCommandGroup;
 import frc.team5115.Subsystems.*;
 
@@ -22,17 +24,11 @@ public class AutoCommandGroup extends SequentialCommandGroup {
         shooter = c;
         addCommands(
             //shoot preloaded ball
+            new AdjustRobotToBallCommandGroup(drivetrain, intake),
             //new AdjustDriveCommandGroup(drivetrain),
-            new AdjustRobotToBallCommandGroup(drivetrain),
-            new AllShoot(intake, feeder, shooter),
-            //new Stopeverything(intake, feeder, shooter),
-            //go to intake ball
-            //new AdjustRobotToBallCommandGroup(drivetrain, limelight),
-           // new IntakeBall(intake),
-            //adjust to shoot
-            //new AdjustDriveCommandGroup(drivetrain, limelight),
-            //new AllShoot(intake, feeder, shooter)
-            new AutoDrive(drivetrain)
+            //Substitute for limelight code
+            new DriveToPoint(drivetrain),
+            new DelayShootGroup(intake, feeder, shooter)
         );
     }
 

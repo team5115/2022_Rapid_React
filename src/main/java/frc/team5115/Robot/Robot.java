@@ -38,11 +38,14 @@ public class Robot extends TimedRobot {
     }
 
     public void teleopInit () {
+        //robotContainer.setUltraDefault();
         robotContainer.startTeleop();
-        robotContainer.setDriveDefault();
+       robotContainer.setDriveDefault();
     }
     
-    public void teleopPeriodic () {}
+    public void teleopPeriodic () {
+        robotContainer.Camera();
+    }
 
     public void testInit () {
         CommandScheduler.getInstance().cancelAll();

@@ -15,7 +15,7 @@ import frc.team5115.Commands.Stopeverything;
 import frc.team5115.Commands.Auto.NewAuto.Adjust.AdjustDriveCommandGroup;
 import frc.team5115.Commands.Auto.NewAuto.AutoCommandGroup;
 import frc.team5115.Commands.*;
-import frc.team5115.Commands.Shooter.AllShoot;
+import frc.team5115.Commands.Shooter.AutoShoot;
 import frc.team5115.Commands.Shooter.DelayShootGroup;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -50,7 +50,7 @@ public class RobotContainer {
 
     public void configureButtonBindings() {
         new JoystickButton( joy, INTAKE_BUTTON_ID).whileHeld(new InstantCommand(intake::forwardIntake)).whenReleased(new InstantCommand(intake::stop));
-        new JoystickButton(joy, SHOOTER_BUTTON_ID).whileHeld(new AllShoot(intake,feeder,shooter)).whenReleased(new Stopeverything(intake, feeder, shooter));
+        new JoystickButton(joy, SHOOTER_BUTTON_ID).whileHeld(new AutoShoot(intake,feeder,shooter)).whenReleased(new Stopeverything(intake, feeder, shooter));
 
         new JoystickButton(joy, LEFT_CLIMBER_UP_BUTTON_ID).whileHeld(new InstantCommand(climber::leftForwardClimb)).whenReleased(new InstantCommand(climber::leftStop));
         new JoystickButton(joy, RIGHT_CLIMBER_UP_BUTTON_ID).whileHeld(new InstantCommand(climber::rightForwardClimb)).whenReleased(new InstantCommand(climber::rightStop));
@@ -60,42 +60,51 @@ public class RobotContainer {
         new JoystickButton(joy, 7).whenPressed(new InstantCommand(camera::setNeutralAngle));
 
 
-        if(joy.getPOV() > 224 && joy.getPOV() < 316){
-            camera.setShootAngle();
-        } 
-        if(joy.getPOV() > 44 && joy.getPOV() < 136){
-            camera.setClimbAngle();
-        } 
+        
+
    
     }
 
     public void setUltraDefault(){
+        //ultrasonic.schedule();
         
     }
 
+
+    public void Camera(){
+        if(joy.getPOV()>-1){
+        if(joy.getPOV() < 46 || joy.getPOV() > 314){
+            camera.setShootAngle();
+        } 
+        if(joy.getPOV() > 134  && joy.getPOV() < 226){
+            camera.setClimbAngle();
+        } 
+    }
+    }
     
 
     public void setDriveDefault(){
-        drivetrain.setDefaultCommand(new driveDefaultCommand(drivetrain, joy).perpetually());
+        drivetrain.setDefaultCommand(new driveDefaultCommand(drivetrain, joy, intake).perpetually());
     }
 
    static class driveDefaultCommand extends CommandBase {
         Drivetrain drivetrain;
         Joystick joy;
-        Camera camera;
+        Intake intake;
 
-        public driveDefaultCommand(Drivetrain drivetrain, Joystick joystick) {
+        public driveDefaultCommand(Drivetrain drivetrain, Joystick joystick, Intake intake) {
             addRequirements(drivetrain);
             this.drivetrain = drivetrain;
             joy = joystick;
-            camera = new Camera();
+            this.intake = intake;
         }
 
         @Override
         public void execute() {
-            camera.getAngle();
-           //drivetrain.MecanumSimpleDrive(joy.getRawAxis(4), joy.getRawAxis(1), joy.getRawAxis(0));
-           drivetrain.FieldOrientedDrive(joy.getRawAxis(JOY_Z_AXIS_ID), joy.getRawAxis(JOY_Y_AXIS_ID), joy.getRawAxis(JOY_X_AXIS_ID));
+            drivetrain.printEncoderDistance();
+            //intake.colorPrint();
+           drivetrain.MecanumSimpleDrive(joy.getRawAxis(4), joy.getRawAxis(1), joy.getRawAxis(0));
+           //drivetrain.FieldOrientedDrive(joy.getRawAxis(JOY_Z_AXIS_ID), joy.getRawAxis(JOY_Y_AXIS_ID), joy.getRawAxis(JOY_X_AXIS_ID));
             
         }    
     }
@@ -105,6 +114,8 @@ public class RobotContainer {
         System.out.println("Starting teleop");
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
         new Stopeverything(intake, feeder, shooter);
+        //camera.setNeutralAngle();
+        drivetrain.resetEncoder();
         if (autocommandgroup != null) {
             autocommandgroup.cancel();
           }
@@ -112,33 +123,18 @@ public class RobotContainer {
     }
 
     public void startAuto(){
-       // new AllShoot(intake, feeder, shooter);
-        //new AutoCommandGroup(intake, feeder, shooter);
-        
+
+        drivetrain.resetEncoder();
         if (autocommandgroup != null) {
             autocommandgroup.schedule();
           }
-        //timer.start();
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
+          
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
         System.out.println("starting auto :)");
     }
 
     public void autoPeriod(){
-        // if(timer.get()<2){
-        //     intake.forwardIntake();
-        // feeder.forwardFeeder();
-        // shooter.forwardShoot();
-        // }
-        // else if(timer.get()<5){
-        //     drivetrain.autodrive();
-        //     intake.stop();
-        //     feeder.stop();
-        //     shooter.stop();
-        // }
-        // else{
-        //     drivetrain.stop();
-
-        // }
+        drivetrain.printEncoderDistance();
     }
 
 }

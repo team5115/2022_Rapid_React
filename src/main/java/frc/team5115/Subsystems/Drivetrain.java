@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.team5115.Robot.RobotContainer;
 import edu.wpi.first.wpilibj.Encoder; 
 import static frc.team5115.Constants.kD;
 import static java.lang.Math.tan;
@@ -35,18 +34,18 @@ public class Drivetrain extends SubsystemBase{
     private double leftSpd;
 
    // public AHRS gyro;
-   // private Encoder encoder;
 
     public double d;
-    public double AverageDistanceDetector1;
     public double distancefromrobot;
     public boolean balldetected;
     public NetworkTable ShooterCam;
     public NetworkTableEntry ty;
     public NetworkTableEntry tx;
     public NetworkTableEntry tv;
-    private AnalogInput DistanceDetector1;
-   // private AnalogInput DistanceDetector2;
+    //private AnalogInput DistanceDetector1;
+    private double AverageDistanceDetector1;
+    public double backLeftEncoder;
+    public double backRightEncoder;
     
     public Drivetrain() {
         frontLeft = new TalonSRX(FRONT_LEFT_MOTOR_ID);
@@ -55,11 +54,8 @@ public class Drivetrain extends SubsystemBase{
         backRight = new TalonSRX(BACK_RIGHT_MOTOR_ID);
 
       //  gyro= new AHRS(SPI.Port.kMXP);
-        //encoder = new Encoder(1,1);
-       // encoder.reset();
-      //  gyro.reset();
-
-        DistanceDetector1 = new AnalogInput(2);
+        
+        //gyro.reset();
         
         AverageDistanceDetector1 = 0;
         balldetected = false;
@@ -68,17 +64,13 @@ public class Drivetrain extends SubsystemBase{
         frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         backLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         backRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+
     }
 
 //-----start of drive methods-----
     //stops drivetrain
     public void stop() {
         plugAndChugDrive(0, 0, 0, 0);
-    }
-
-    //stops gyro
-    public void resetGyro(){
-      //  gyro.reset();
     }
 
      /**
@@ -153,35 +145,26 @@ public class Drivetrain extends SubsystemBase{
         backRight.set(ControlMode.PercentOutput, backRightSpeed);
     }
 
-    //sent speed for wheels for autodrive, used in AutoDrive.java and DriveForward.java 
+    //SET speed for wheels for autodrive, used in AutoDrive.java and DriveForward.java 
     public void autodrive(){
         plugAndChugDrive(0.25, -0.25, 0.25, -0.25);
-        System.out.println("@meh");
     }
 
-
-/*
-    public boolean autoDriveFinished(){
-        if(encoder.getDistance()>autoDriveDistance){
-            return true;
-        }
-        else{
-            return false;
-        }
+    public void backwardsdrive(){
+        plugAndChugDrive(-0.25, 0.25, -0.25, 0.25);
     }
-    */
+
 //-----end of drive methods-----
 
-
 //-----start of distance methods-----
-    public void getDistance(){
-     //  System.out.println(encoder.getDistance());
-    //System.out.println(100*gyro.getDisplacementX());
+    public void printEncoderDistance(){
+    backLeftEncoder = -backLeft.getSelectedSensorPosition()*ENCODER_CALIBRATION;
+    backRightEncoder = backRight.getSelectedSensorPosition()*ENCODER_CALIBRATION;
+    System.out.println(backLeftEncoder);
     }
 
-    public void DistanceDetectionRaw(){
+   /* public void DistanceDetectionRaw(){
       AverageDistanceDetector1 = DistanceDetector1.getVoltage()*ULTRASONIC_UNIT_CONVERSION;
-     //   AverageDistanceDetector2 = DistanceDetector2.getVoltage()*10000;
         System.out.println("ultrasonic:    " + AverageDistanceDetector1);
     }
 
@@ -191,38 +174,32 @@ public class Drivetrain extends SubsystemBase{
             tx = ShooterCam.getEntry("tx");
             tv = ShooterCam.getEntry("tv");
         
-        if(DistanceDetector1.getVoltage()*10000>16000){
-            balldetected = false;
-        }
-        else{
-            balldetected = true;
-        }
+        balldetected = !(DistanceDetector1.getVoltage()*ULTRASONIC_UNIT_CONVERSION>300);
         
         double n = 1000;
         double f = 0;
-        double q = 0;
 
         for(int i = 0; i< n; i++){
             double j = DistanceDetector1.getVoltage()*ULTRASONIC_UNIT_CONVERSION;
-            f = f + j;
+            f =+ j;
         }
 
-        f = f/n;
-        q = q/n;
+        AverageDistanceDetector1 = f/n;
 
-        AverageDistanceDetector1 = f;
+        System.out.println("ultrasonic:    " + AverageDistanceDetector1);
+
+    }
+    */
+
+    public void resetEncoder(){
+        backLeft.setSelectedSensorPosition(0);
+        backRight.setSelectedSensorPosition(0);
     }
 
-    public double getDistanceFromHub(){
-        double yAngle = ty.getDouble(0);
-        d = (AUTO_HIGH_GOAL_HEIGHT - AUTO_CAMERA_HEIGHT) / tan(toRadians(yAngle + AUTO_CAMERA_ANGLE));
-        return d;
-    }
 //-----end of detection methods-----
 
 //-----start of adjust methods-----
     public void AdjustAngle(){
-        
             double xangle = -tx.getDouble(0); 
             double dectector = tv.getDouble(0);
             if(dectector == 1){
@@ -240,19 +217,18 @@ public class Drivetrain extends SubsystemBase{
         
     }
 
-    public void AdjustAngleToBall(){
-        plugAndChugDrive(-0.5, 0.5, 0, 0);
+    /*public void AdjustAngleToBall(){
+        plugAndChugDrive(-0.25, 0.25, 0, 0);
     }
 
     public void AdjustDistanceToBall(){
-        leftSpd = Math.abs(AverageDistanceDetector1-50)*hD;
-        rightSpd = Math.abs(AverageDistanceDetector1-50)*hD;
+        leftSpd = (Math.abs(AverageDistanceDetector1-150)*hD)/2;
+        rightSpd = (Math.abs(AverageDistanceDetector1-150)*hD)/2;
         plugAndChugDrive(leftSpd, rightSpd, leftSpd, rightSpd);
-    }
+    }*/
 
     public void AdjustDistance(){
         
-
         double yangle = ty.getDouble(0); 
         double dectector = tv.getDouble(0);
         if(dectector == 1){
@@ -271,43 +247,6 @@ public class Drivetrain extends SubsystemBase{
         
     }
 
-    /*
-    public void ballAdjustAngle(){
-        NetworkTable networkTableInstance = NetworkTableInstance.getDefault().getTable("limelight");
-        NetworkTableEntry tx = networkTableInstance.getEntry("tx");
-        NetworkTableEntry tv = networkTableInstance.getEntry("tv");
-        double xangle = -tx.getDouble(0); 
-        double dectector = tv.getDouble(0);
-        if(dectector == 1){
-            if(xangle > 0){
-                rightSpd = (xangle)*kD;
-                leftSpd = -rightSpd;
-                plugAndChugDrive(rightSpd, -rightSpd, 0, 0);
-            }
-            else{
-                leftSpd = -(xangle)*kD;
-                rightSpd = leftSpd;
-                plugAndChugDrive(-rightSpd, rightSpd, 0, 0); 
-            }
-        }
-    }
-    
-    public void ballAdjustDistance(){
-        NetworkTable networkTableInstance = NetworkTableInstance.getDefault().getTable("limelight");
-        NetworkTableEntry ty = networkTableInstance.getEntry("ty");
-        NetworkTableEntry tv = networkTableInstance.getEntry("tv");
-        NetworkTableEntry ta = networkTableInstance.getEntry("ta");
-    
-        double yangle = ty.getDouble(0); 
-        double dectector = tv.getDouble(0);
-        double area = ta.getDouble(0); 
-        if(dectector == 1){
-            d = (AUTO_HIGH_GOAL_HEIGHT - AUTO_CAMERA_HEIGHT) / tan(toRadians(yangle + AUTO_CAMERA_ANGLE));
-            plugAndChugDrive(leftSpd, rightSpd, leftSpd, rightSpd);
-        }
-        plugAndChugDrive(leftSpd, rightSpd, leftSpd, rightSpd);
-    } 
-    */
 //-----end of adjust methods-----
 
 //-----start of get methods-----
@@ -315,12 +254,13 @@ public class Drivetrain extends SubsystemBase{
     public double getX(){
         return tx.getDouble(0);
     }
-    /*
-    public double getY(){
-        NetworkTable networkTableInstance = NetworkTableInstance.getDefault().getTable("limelight");
-        NetworkTableEntry ty = networkTableInstance.getEntry("ty");    
-        return ty.getDouble(0);
+
+    public double getDistanceFromHub(){
+        double yAngle = ty.getDouble(0);
+        d = (AUTO_HIGH_GOAL_HEIGHT - AUTO_CAMERA_HEIGHT) / tan(toRadians(yAngle + AUTO_CAMERA_ANGLE));
+        return d;
     }
-    */
+
+
 //-----end of get methods-----
 }

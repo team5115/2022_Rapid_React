@@ -11,20 +11,22 @@ public class Camera extends SubsystemBase {
     
     
     public Camera(){
-      //  servo = new Servo(6);
+      servo = new Servo(0);
       //  servo.setAngle(neutral);
     }
 
     public void setClimbAngle(){
-       // servo.setAngle(climb);
+       servo.setAngle(180);
+       System.out.println("Climb");
     }
 
     public void setShootAngle(){
-       // servo.setAngle(shoot);
+        servo.setAngle(90);
+        System.out.println("Shoot");
     }
 
     public void setNeutralAngle(){
-       // servo.setAngle(neutral);
+        servo.setAngle(neutral);
     }
 
     public void getAngle(){
