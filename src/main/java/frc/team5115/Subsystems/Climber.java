@@ -22,8 +22,8 @@ public class Climber {
   //private PWMSparkMax climberB;
   private double climbSpeed = .7;
   private Servo servo;
-  //private CANSparkMax LeftClimber;
-  //private CANSparkMax RightClimber;
+  private CANSparkMax LeftClimber;
+  private CANSparkMax RightClimber;
   private TalonSRX leftClimberTest;
   private TalonSRX rightClimberTest;
   
@@ -36,10 +36,10 @@ public class Climber {
 
   
     public Climber(){
-      //LeftClimber = new CANSparkMax(LEFT_CLIMBER_MOTOR_ID, MotorType.kBrushless);
-      leftClimberTest = new TalonSRX(1);
-      rightClimberTest = new TalonSRX(2);
-      //RightClimber = new CANSparkMax(RIGHT_CLIMBER_MOTOR_ID, MotorType.kBrushless);
+      LeftClimber = new CANSparkMax(LEFT_CLIMBER_MOTOR_ID, MotorType.kBrushless);
+      //leftClimberTest = new TalonSRX(1);
+      //rightClimberTest = new TalonSRX(2);
+      RightClimber = new CANSparkMax(RIGHT_CLIMBER_MOTOR_ID, MotorType.kBrushless);
       leftLimit = new DigitalInput(1);
       rightLimit = new DigitalInput(2);
 
@@ -57,13 +57,13 @@ public class Climber {
 
 
     public void leftForwardClimb(){
-     //LeftClimber.set(climbSpeed);
-     leftClimberTest.set(ControlMode.PercentOutput, climbSpeed);
+     LeftClimber.set(climbSpeed);
+     //leftClimberTest.set(ControlMode.PercentOutput, climbSpeed);
     }
 
     public void rightForwardClimb(){
-      //RightClimber.set(climbSpeed);
-      rightClimberTest.set(ControlMode.PercentOutput, climbSpeed);
+      RightClimber.set(climbSpeed);
+      //rightClimberTest.set(ControlMode.PercentOutput, climbSpeed);
     }
 
     public boolean getLeftLimit(){

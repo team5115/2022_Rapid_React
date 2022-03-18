@@ -93,7 +93,7 @@ public class RobotContainer {
     public void startTeleop(){
         System.out.println("Starting teleop");
         new Stopeverything(intake, feeder, shooter);
-        //NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
         drivetrain.resetEncoder();
         if (autocommandgroup != null) {
             autocommandgroup.cancel();
@@ -102,7 +102,7 @@ public class RobotContainer {
     }
 
     public void startAuto(){
-        //NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
         drivetrain.resetEncoder();
         if (autocommandgroup != null) {
             autocommandgroup.schedule();

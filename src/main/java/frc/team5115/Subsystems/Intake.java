@@ -7,7 +7,7 @@ import static frc.team5115.Constants.*;
 
 public class Intake extends SubsystemBase{
     private TalonSRX intake;
-    private double intakeSpeed = .6;
+    private double intakeSpeed = .8;
 
     public Intake(){
         intake = new TalonSRX(INTAKE_MOTOR_ID);    

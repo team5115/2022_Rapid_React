@@ -38,7 +38,7 @@ public class AdjustDistance extends CommandBase {
         public void end(boolean interupted){
             drivetrain.stop();
             //camera.setClimbAngle();
-            //NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
+            NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
         }
 
     
