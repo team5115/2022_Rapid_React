@@ -8,16 +8,13 @@ import frc.team5115.Subsystems.*;
 import static frc.team5115.Constants.*;
 
 import frc.team5115.Commands.Subsystems.ReverseFeeder;
-import frc.team5115.Commands.Subsystems.Climber.LeftForwardClimb;
-import frc.team5115.Commands.Subsystems.Climber.LeftReverseClimb;
-import frc.team5115.Commands.Subsystems.Climber.RightForwardClimb;
-import frc.team5115.Commands.Subsystems.Climber.RightReverseClimb;
 import frc.team5115.Commands.Subsystems.Limelight.Update;
 import frc.team5115.Commands.Subsystems.Shooter.DelayShootGroup;
 import frc.team5115.Commands.*;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.team5115.Commands.NewAuto.AutoCommandGroup;
+import frc.team5115.Commands.NewAuto.Adjust.AdjustDistance;
 
 public class RobotContainer {
 
@@ -56,14 +53,16 @@ public class RobotContainer {
         new JoystickButton(joy, RIGHT_CLIMBER_DOWN_BUTTON_ID).whileHeld(new RightReverseClimb(climber)).whenReleased(new InstantCommand(climber::rightStop));
       */
         new JoystickButton(joy, LEFT_CLIMBER_UP_BUTTON_ID).whileHeld(new InstantCommand(climber::leftForwardClimb)).whenReleased(new InstantCommand(climber::leftStop));
-        new JoystickButton(joy, RIGHT_CLIMBER_UP_BUTTON_ID).whileHeld(new InstantCommand(climber::leftForwardClimb)).whenReleased(new InstantCommand(climber::rightStop));
-        new JoystickButton(joy, LEFT_CLIMBER_DOWN_BUTTON_ID).whileHeld(new InstantCommand(climber::leftForwardClimb)).whenReleased(new InstantCommand(climber::leftStop));
-        new JoystickButton(joy, RIGHT_CLIMBER_DOWN_BUTTON_ID).whileHeld(new InstantCommand(climber::leftForwardClimb)).whenReleased(new InstantCommand(climber::rightStop));
+        new JoystickButton(joy, RIGHT_CLIMBER_UP_BUTTON_ID).whileHeld(new InstantCommand(climber::rightForwardClimb)).whenReleased(new InstantCommand(climber::rightStop));
+        new JoystickButton(joy, LEFT_CLIMBER_DOWN_BUTTON_ID).whileHeld(new InstantCommand(climber::leftReverseClimb)).whenReleased(new InstantCommand(climber::leftStop));
+        new JoystickButton(joy, RIGHT_CLIMBER_DOWN_BUTTON_ID).whileHeld(new InstantCommand(climber::rightReverseClimb)).whenReleased(new InstantCommand(climber::rightStop));
       //  new JoystickButton(joy, 7).whileHeld(new InstantCommand(intake::reverseIntake(-.25)).alongWith(new InstantCommand(feeder::reverseFeeder))).whenReleased(new Stopeverything(intake, feeder, shooter));
         new JoystickButton(joy, 8).whenPressed(new ReverseFeeder(intake, feeder));
 
         new JoystickButton(joy, 9).whileHeld(new InstantCommand(drivetrain::oliviaMode)).whenReleased(new InstantCommand(drivetrain::adultMode));
    
+        new JoystickButton(joy, 10).whileHeld(new AdjustDistance(drivetrain, camera)).whenReleased(new InstantCommand(drivetrain::letGo));
+
     }
 
     public void configureLimelight(){
@@ -97,7 +96,7 @@ public class RobotContainer {
     public void startTeleop(){
         System.out.println("Starting teleop");
         new Stopeverything(intake, feeder, shooter);
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
         drivetrain.resetEncoder();
         if (autocommandgroup != null) {
             autocommandgroup.cancel();
@@ -109,7 +108,7 @@ public class RobotContainer {
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
         drivetrain.resetEncoder();
         if (autocommandgroup != null) {
-            //autocommandgroup.schedule();
+            autocommandgroup.schedule();
           }
         
     }

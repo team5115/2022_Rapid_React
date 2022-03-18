@@ -24,7 +24,6 @@ public class AdjustAngle extends CommandBase {
 
     @Override
         public void initialize(){
-            NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
         }
 
     @Override

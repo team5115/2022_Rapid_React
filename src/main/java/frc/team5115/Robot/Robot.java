@@ -60,12 +60,15 @@ public class Robot extends TimedRobot {
     }
 
     public void practicePeriodic(){
-        if(timer.get()<16){
-            robotContainer.autoPeriod();
+        autonomousInit();
+        if(timer.get()<15){
+            autonomousPeriodic();
         }
         else{
-        robotContainer.startTeleop();
-        robotContainer.setDriveDefault();
+        teleopPeriodic();
+        }
+        if(timer.get() == 15){
+            teleopInit();
         }
     }
 }

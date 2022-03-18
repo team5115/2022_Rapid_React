@@ -12,6 +12,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Timer;
 
 import static frc.team5115.Constants.*;
 
@@ -43,6 +44,8 @@ public class Drivetrain extends SubsystemBase{
     public double backRightEncoder;
 
     public double throttle;
+    public boolean letgo;
+    private Timer timer;
    // public double xAngle;
     //public double detector;
  
@@ -56,6 +59,8 @@ public class Drivetrain extends SubsystemBase{
         AverageDistanceDetector1 = 0;
         balldetected = false;
 
+        timer = new Timer();
+        timer.reset();
         
         
         frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
@@ -67,6 +72,7 @@ public class Drivetrain extends SubsystemBase{
         //detector = ty.getDOuble(0;
 
         throttle = 1;
+        
     }
 
     public void stop() {
@@ -178,6 +184,16 @@ public class Drivetrain extends SubsystemBase{
 
     public double getY(){
         return ty.getDouble(0);
+    }
+
+    public void letGo(){
+        timer.start();
+        letgo = true;
+        while(timer.get()<0.5){
+
+        }
+        letgo = false;
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
     }
 
     public void oliviaMode(){
