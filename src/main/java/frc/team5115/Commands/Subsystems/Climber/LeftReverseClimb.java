@@ -24,12 +24,12 @@ public class LeftReverseClimb extends CommandBase{
         else{
             climber.leftReverseClimb();
         }
-        System.out.println(climber.nogodirectionright);
+        System.out.println("left no go direction" + climber.nogodirectionleft);
     }        
     
     public boolean isFinished(){
-        if(climber.getLeftLimit()&climber.nogodirectionright=="null"){
-            climber.nogodirectionright = "bckl";
+        if(climber.getLeftLimit()&climber.nogodirectionleft=="null"){
+            climber.nogodirectionleft = "bckl";
             return true;
         }
         else{

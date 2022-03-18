@@ -37,8 +37,8 @@ public class Climber {
   
     public Climber(){
       LeftClimber = new CANSparkMax(LEFT_CLIMBER_MOTOR_ID, MotorType.kBrushless);
-      //leftClimberTest = new TalonSRX(1);
-      //rightClimberTest = new TalonSRX(2);
+     // leftClimberTest = new TalonSRX(1);
+     // rightClimberTest = new TalonSRX(2);
       RightClimber = new CANSparkMax(RIGHT_CLIMBER_MOTOR_ID, MotorType.kBrushless);
       leftLimit = new DigitalInput(1);
       rightLimit = new DigitalInput(2);
@@ -62,8 +62,8 @@ public class Climber {
     }
 
     public void rightForwardClimb(){
-      RightClimber.set(climbSpeed);
-      //rightClimberTest.set(ControlMode.PercentOutput, climbSpeed);
+     RightClimber.set(climbSpeed);
+     // rightClimberTest.set(ControlMode.PercentOutput, climbSpeed);
     }
 
     public boolean getLeftLimit(){
@@ -75,22 +75,22 @@ public class Climber {
     }
 
     public void leftReverseClimb(){
-      //LeftClimber.set(-climbSpeed);
-      leftClimberTest.set(ControlMode.PercentOutput, -climbSpeed);
+    LeftClimber.set(-climbSpeed);
+    //leftClimberTest.set(ControlMode.PercentOutput, -climbSpeed);
     }
 
     public void rightReverseClimb(){
-      //RightClimber.set(-climbSpeed);
-      rightClimberTest.set(ControlMode.PercentOutput, -climbSpeed);
+    RightClimber.set(-climbSpeed);
+    //  rightClimberTest.set(ControlMode.PercentOutput, -climbSpeed);
     }
 
     public void leftStop(){
-       //LeftClimber.set(0);
-       leftClimberTest.set(ControlMode.PercentOutput, 0);
+    LeftClimber.set(0);
+    //   leftClimberTest.set(ControlMode.PercentOutput, 0);
     }
 
     public void rightStop(){
-      //RightClimber.set(0);
-      leftClimberTest.set(ControlMode.PercentOutput, 0);
+    RightClimber.set(0);
+    //  leftClimberTest.set(ControlMode.PercentOutput, 0);
    }
 }

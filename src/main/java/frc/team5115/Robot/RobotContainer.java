@@ -50,15 +50,19 @@ public class RobotContainer {
         new JoystickButton( joy, INTAKE_BUTTON_ID).whileHeld(new InstantCommand(intake::forwardIntake)).whenReleased(new InstantCommand(intake::stop));
         new JoystickButton(joy, SHOOTER_BUTTON_ID).whileHeld(new DelayShootGroup(intake, feeder, shooter)).whenReleased(new Stopeverything(intake, feeder, shooter));
 
-        new JoystickButton(joy, LEFT_CLIMBER_UP_BUTTON_ID).whileHeld(new LeftForwardClimb(climber)).whenReleased(new InstantCommand(climber::leftStop));
+      /*  new JoystickButton(joy, LEFT_CLIMBER_UP_BUTTON_ID).whileHeld(new LeftForwardClimb(climber)).whenReleased(new InstantCommand(climber::leftStop));
         new JoystickButton(joy, RIGHT_CLIMBER_UP_BUTTON_ID).whileHeld(new RightForwardClimb(climber)).whenReleased(new InstantCommand(climber::rightStop));
         new JoystickButton(joy, LEFT_CLIMBER_DOWN_BUTTON_ID).whileHeld(new LeftReverseClimb(climber)).whenReleased(new InstantCommand(climber::leftStop));
         new JoystickButton(joy, RIGHT_CLIMBER_DOWN_BUTTON_ID).whileHeld(new RightReverseClimb(climber)).whenReleased(new InstantCommand(climber::rightStop));
-        
+      */
+        new JoystickButton(joy, LEFT_CLIMBER_UP_BUTTON_ID).whileHeld(new InstantCommand(climber::leftForwardClimb)).whenReleased(new InstantCommand(climber::leftStop));
+        new JoystickButton(joy, RIGHT_CLIMBER_UP_BUTTON_ID).whileHeld(new InstantCommand(climber::leftForwardClimb)).whenReleased(new InstantCommand(climber::rightStop));
+        new JoystickButton(joy, LEFT_CLIMBER_DOWN_BUTTON_ID).whileHeld(new InstantCommand(climber::leftForwardClimb)).whenReleased(new InstantCommand(climber::leftStop));
+        new JoystickButton(joy, RIGHT_CLIMBER_DOWN_BUTTON_ID).whileHeld(new InstantCommand(climber::leftForwardClimb)).whenReleased(new InstantCommand(climber::rightStop));
       //  new JoystickButton(joy, 7).whileHeld(new InstantCommand(intake::reverseIntake(-.25)).alongWith(new InstantCommand(feeder::reverseFeeder))).whenReleased(new Stopeverything(intake, feeder, shooter));
         new JoystickButton(joy, 8).whenPressed(new ReverseFeeder(intake, feeder));
 
-        new JoystickButton(joy, 9).whileHeld(new InstantCommand(drivetrain::kidMode)).whenReleased(new InstantCommand(drivetrain::adultMode));
+        new JoystickButton(joy, 9).whileHeld(new InstantCommand(drivetrain::oliviaMode)).whenReleased(new InstantCommand(drivetrain::adultMode));
    
     }
 
@@ -105,7 +109,7 @@ public class RobotContainer {
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
         drivetrain.resetEncoder();
         if (autocommandgroup != null) {
-            autocommandgroup.schedule();
+            //autocommandgroup.schedule();
           }
         
     }

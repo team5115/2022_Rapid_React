@@ -180,7 +180,7 @@ public class Drivetrain extends SubsystemBase{
         return ty.getDouble(0);
     }
 
-    public void kidMode(){
+    public void oliviaMode(){
         throttle = 0.3;
     }
 
