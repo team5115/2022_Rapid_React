@@ -1,4 +1,4 @@
-package frc.team5115.Commands.Subsystems;
+package frc.team5115.Commands.Subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.Timer;
 import frc.team5115.Subsystems.*;

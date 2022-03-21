@@ -43,7 +43,7 @@ public class Constants{
     public static final double bA = 10;
     public static final double MaxArea = 0.1;
     public static final double kA = 0.1; 
-    public static final double TARGET_ANGLE = 6.78;
+    public static final double TARGET_ANGLE = 1;
     public static final double ULTRASONIC_UNIT_CONVERSION = (10000/45.927);
     public static final double D1 = 1;
    // public static final StartingConfiguration startingConfiguration = StartingConfiguration.Middle;

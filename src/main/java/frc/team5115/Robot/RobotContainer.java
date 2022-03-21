@@ -7,9 +7,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.team5115.Subsystems.*;
 import static frc.team5115.Constants.*;
 
-import frc.team5115.Commands.Subsystems.ReverseFeeder;
 import frc.team5115.Commands.Subsystems.Limelight.Update;
-import frc.team5115.Commands.Subsystems.Shooter.DelayShootGroup;
+import frc.team5115.Commands.Subsystems.Shooter.DelayShootGroup1;
+import frc.team5115.Commands.Subsystems.Shooter.ReverseFeeder;
+import frc.team5115.Commands.Subsystems.Shooter.Auto.DelayShootGroupAuto;
 import frc.team5115.Commands.*;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -45,8 +46,9 @@ public class RobotContainer {
 
     public void configureButtonBindings() {
         new JoystickButton( joy, INTAKE_BUTTON_ID).whileHeld(new InstantCommand(intake::forwardIntake)).whenReleased(new InstantCommand(intake::stop));
-        new JoystickButton(joy, SHOOTER_BUTTON_ID).whileHeld(new DelayShootGroup(intake, feeder, shooter)).whenReleased(new Stopeverything(intake, feeder, shooter));
-
+        //new JoystickButton(joy, SHOOTER_BUTTON_ID).whileHeld(new DelayShootGroupAuto(intake, feeder, shooter)).whenReleased(new Stopeverything(intake, feeder, shooter));
+        new JoystickButton(joy, SHOOTER_BUTTON_ID).whileHeld(new DelayShootGroup1(intake, feeder, shooter)).whenReleased(new Stopeverything(intake, feeder, shooter));
+        
       /*  new JoystickButton(joy, LEFT_CLIMBER_UP_BUTTON_ID).whileHeld(new LeftForwardClimb(climber)).whenReleased(new InstantCommand(climber::leftStop));
         new JoystickButton(joy, RIGHT_CLIMBER_UP_BUTTON_ID).whileHeld(new RightForwardClimb(climber)).whenReleased(new InstantCommand(climber::rightStop));
         new JoystickButton(joy, LEFT_CLIMBER_DOWN_BUTTON_ID).whileHeld(new LeftReverseClimb(climber)).whenReleased(new InstantCommand(climber::leftStop));
@@ -61,7 +63,7 @@ public class RobotContainer {
 
         new JoystickButton(joy, 9).whileHeld(new InstantCommand(drivetrain::oliviaMode)).whenReleased(new InstantCommand(drivetrain::adultMode));
    
-        new JoystickButton(joy, 10).whileHeld(new AdjustDistance(drivetrain, camera)).whenReleased(new InstantCommand(drivetrain::letGo));
+        //new JoystickButton(joy, 10).whileHeld(new AdjustDistance(drivetrain, camera)).whenReleased(new InstantCommand(drivetrain::letGo));
 
     }
 
@@ -97,7 +99,7 @@ public class RobotContainer {
         System.out.println("Starting teleop");
         new Stopeverything(intake, feeder, shooter);
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
-        drivetrain.resetEncoder();
+        //drivetrain.resetEncoder();
         if (autocommandgroup != null) {
             autocommandgroup.cancel();
           }
@@ -105,8 +107,8 @@ public class RobotContainer {
     }
 
     public void startAuto(){
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
-        drivetrain.resetEncoder();
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
+        //drivetrain.resetEncoder();
         if (autocommandgroup != null) {
             autocommandgroup.schedule();
           }

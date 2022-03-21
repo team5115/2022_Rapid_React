@@ -20,7 +20,7 @@ public class Shoot extends CommandBase{
     }
 
     public void execute() {
-        shooter.forwardShoot();
+        shooter.forwardShoot(.7);
     }
 
     public boolean isFinished() {

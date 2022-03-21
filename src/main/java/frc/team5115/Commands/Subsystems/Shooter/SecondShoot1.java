@@ -5,13 +5,13 @@ import frc.team5115.Subsystems.Intake;
 import frc.team5115.Subsystems.*;
 import edu.wpi.first.wpilibj.Timer;
 
-public class AutoShoot2 extends CommandBase{
+public class SecondShoot1 extends CommandBase{
     public Intake intake;
     public Feeder feeder;
     public Shooter shooter;
     public Timer timer;
     
-    public AutoShoot2(Intake a, Feeder b, Shooter c){
+    public SecondShoot1(Intake a, Feeder b, Shooter c){
         timer = new Timer();
        intake = a;
        feeder = b;
@@ -25,19 +25,19 @@ public class AutoShoot2 extends CommandBase{
 
 
     public void execute() {
-        shooter.forwardShoot();
+        shooter.forwardShoot(.7);
         feeder.forwardFeeder();
-        intake.forwardIntake();
+        //intake.forwardIntake();
         System.out.println("all shoot");
     }
 
     public void end(boolean interupted){
-        shooter.stop();
-        intake.stop();
-        feeder.stop();
+        //shooter.stop();
+        //intake.stop();
+        //feeder.stop();
     }
     public boolean isFinished() {
-        if(timer.get()>1){
+        if(timer.get()>0.5){
             return true;
         }
         return false;

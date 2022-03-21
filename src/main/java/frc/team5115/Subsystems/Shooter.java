@@ -17,9 +17,9 @@ public class Shooter {
         rightShooter = new TalonSRX(RIGHT_SHOOTER_MOTOR_ID);
     }
 
-    public void forwardShoot(){
-        leftShooter.set(ControlMode.PercentOutput, shootSpeed);
-        rightShooter.set(ControlMode.PercentOutput, -shootSpeed);
+    public void forwardShoot(Double speed){
+        leftShooter.set(ControlMode.PercentOutput, speed);
+        rightShooter.set(ControlMode.PercentOutput, -speed);
     }
 
     public void stop(){

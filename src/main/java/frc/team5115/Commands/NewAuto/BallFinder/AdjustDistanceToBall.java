@@ -47,13 +47,7 @@ public class AdjustDistanceToBall extends CommandBase{
         }
     @Override
         public boolean isFinished() {
-               /* if(drivetrain.backRightEncoder > 200){
-                    System.out.println("stop drive and intake");
-                    return true;
-                    
-                }
-                return false;
-                */
+               
                 if(timer.get()>3){
                     return true;
                 }

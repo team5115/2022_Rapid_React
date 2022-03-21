@@ -1,7 +1,6 @@
 package frc.team5115.Commands.NewAuto;
-//import frc.team5115.Commands.Intake.*;
-import frc.team5115.Commands.Subsystems.Shooter.AutoShoot;
-import frc.team5115.Commands.Subsystems.Shooter.DelayShootGroupAuto;
+import frc.team5115.Commands.Subsystems.Shooter.Auto.AutoShoot;
+import frc.team5115.Commands.Subsystems.Shooter.Auto.DelayShootGroupAuto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.team5115.Commands.Stopeverything;
 import frc.team5115.Commands.NewAuto.Adjust.AdjustDriveCommandGroup;

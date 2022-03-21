@@ -127,6 +127,7 @@ public class Drivetrain extends SubsystemBase{
 
     public void autodrive(){
         plugAndChugDrive(0.30, -0.30, 0.30, -0.30);
+        System.out.println("autodrive");
     }
 
     public void backwardsdrive(){
@@ -234,8 +235,8 @@ public class Drivetrain extends SubsystemBase{
             rightSpd = -leftSpd;
         }
         else{
-            leftSpd = 0;
-            rightSpd = 0;
+            leftSpd = -0.15;
+            rightSpd = 0.15;
             System.out.println("adjust distance stopped");
         }
         plugAndChugDrive(leftSpd, rightSpd, leftSpd, rightSpd);
