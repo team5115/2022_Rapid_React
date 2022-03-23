@@ -96,7 +96,7 @@ public class Drivetrain extends SubsystemBase{
         frontRightSpeed = (x +  y + z);
         backRightSpeed = (x + y - z);
 
-        if(trigger > 0)
+        if(trigger > .5)
         {
             plugAndChugDrive((frontLeftSpeed*.25), (frontRightSpeed*.25), (backLeftSpeed*.25), (backRightSpeed*.25));
         }
