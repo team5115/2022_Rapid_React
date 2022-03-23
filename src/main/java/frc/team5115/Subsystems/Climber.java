@@ -40,8 +40,8 @@ public class Climber {
      // leftClimberTest = new TalonSRX(1);
      // rightClimberTest = new TalonSRX(2);
       RightClimber = new CANSparkMax(RIGHT_CLIMBER_MOTOR_ID, MotorType.kBrushless);
-      //leftLimit = new DigitalInput(1);
-      //rightLimit = new DigitalInput(2);
+      leftLimit = new DigitalInput(1);
+      rightLimit = new DigitalInput(2);
 
       nogodirectionleft = "null";
       nogodirectionright = "null";
@@ -62,14 +62,15 @@ public class Climber {
      // rightClimberTest.set(ControlMode.PercentOutput, climbSpeed);
     }
 
-    /*public boolean getLeftLimit(){
+    public boolean getLeftLimit(){
       return !leftLimit.get();
     }
 
     public boolean getRightLimit(){
       return !rightLimit.get();
     }
-    */
+    
+    
 
     public void leftReverseClimb(){
     LeftClimber.set(-climbSpeed);

@@ -88,7 +88,7 @@ public class RobotContainer {
 
         @Override
         public void execute() {
-           drivetrain.MecanumSimpleDrive(joy.getRawAxis(4), joy.getRawAxis(1), joy.getRawAxis(0));
+           drivetrain.MecanumSimpleDrive(joy.getRawAxis(4), joy.getRawAxis(1), joy.getRawAxis(0), joy.getRawAxis(2));
            drivetrain.DistanceDetectionAverage();
      
         }    

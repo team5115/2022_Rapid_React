@@ -89,14 +89,22 @@ public class Drivetrain extends SubsystemBase{
         plugAndChugDrive(leftSpd, rightSpd, leftSpd, rightSpd);
     }
 
-    public void MecanumSimpleDrive(double y, double x, double z) {
+    public void MecanumSimpleDrive(double y, double x, double z, double trigger) {
     
         frontLeftSpeed = (-x + y + z);
         backLeftSpeed = (-x + y - z);
         frontRightSpeed = (x +  y + z);
         backRightSpeed = (x + y - z);
 
-        plugAndChugDrive(frontLeftSpeed, frontRightSpeed, backLeftSpeed, backRightSpeed);
+        if(trigger > 0)
+        {
+            plugAndChugDrive((frontLeftSpeed*.25), (frontRightSpeed*.25), (backLeftSpeed*.25), (backRightSpeed*.25));
+        }
+        else
+        {
+            plugAndChugDrive(frontLeftSpeed, frontRightSpeed, backLeftSpeed, backRightSpeed);
+        }
+        
     }
 
     public void FieldOrientedDrive(double strafe, double fwd, double rotate){
