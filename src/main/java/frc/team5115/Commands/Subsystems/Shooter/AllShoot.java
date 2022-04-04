@@ -25,7 +25,7 @@ public class AllShoot extends CommandBase{
 
 
     public void execute() {
-        shooter.forwardShoot(.8);
+        shooter.forwardShoot(.65);
         feeder.forwardFeeder();
         intake.forwardIntake();
         System.out.println("all shoot");

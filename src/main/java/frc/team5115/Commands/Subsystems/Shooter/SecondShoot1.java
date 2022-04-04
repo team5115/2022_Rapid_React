@@ -25,7 +25,7 @@ public class SecondShoot1 extends CommandBase{
 
 
     public void execute() {
-        shooter.forwardShoot(.7);
+        shooter.forwardShoot(.65);
         feeder.forwardFeeder();
         //intake.forwardIntake();
         System.out.println("all shoot");

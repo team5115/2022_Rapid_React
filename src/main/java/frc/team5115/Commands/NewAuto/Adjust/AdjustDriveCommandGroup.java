@@ -23,7 +23,7 @@ public class AdjustDriveCommandGroup extends SequentialCommandGroup {
         this.drivetrain = drivetrain;
         addCommands(
         //Adjusts Angle
-        //new AdjustAngle(drivetrain),
+        new AdjustAngle(drivetrain),
 
        new AdjustDistance(drivetrain, camera)
 

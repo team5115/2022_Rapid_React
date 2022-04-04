@@ -12,13 +12,13 @@ public class LeftForwardClimb extends CommandBase{
     }
 
     public void execute(){
-        if(climber.getRightLimit() == false){
+        if(climber.getLeftLimit() == false){
             climber.nogodirectionright = "null";
             
         }
       
         if(climber.nogodirectionright == "fwdl"){
-            climber.rightStop();
+            climber.leftStop();
                 
         }
         else{
@@ -28,7 +28,7 @@ public class LeftForwardClimb extends CommandBase{
     }        
     
     public boolean isFinished(){
-        if(climber.getRightLimit()&climber.nogodirectionright=="null"){
+        if(climber.getLeftLimit()&climber.nogodirectionright=="null"){
             climber.nogodirectionright = "fwdl";
             return true;
         }

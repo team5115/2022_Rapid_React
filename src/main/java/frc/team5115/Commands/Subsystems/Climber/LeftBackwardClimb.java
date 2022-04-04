@@ -18,7 +18,7 @@ public class LeftBackwardClimb extends CommandBase{
         }
       
         if(climber.nogodirectionright == "bckl"){
-            climber.rightStop();
+            climber.leftStop();
                 
         }
         else{
@@ -28,7 +28,7 @@ public class LeftBackwardClimb extends CommandBase{
     }        
     
     public boolean isFinished(){
-        if(climber.getRightLimit()&climber.nogodirectionright=="null"){
+        if(climber.getLeftLimit()&climber.nogodirectionright=="null"){
             climber.nogodirectionright = "bckl";
             return true;
         }

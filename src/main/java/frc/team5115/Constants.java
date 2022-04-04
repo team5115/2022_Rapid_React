@@ -18,7 +18,7 @@ public class Constants{
     public static final int LEFT_CLIMBER_MOTOR_ID = 9;
     public static final int RIGHT_CLIMBER_MOTOR_ID = 10;
 
-    public static final byte LIMELIGHT_BUTTON_ID = 3;
+    public static final int LIMELIGHT_BUTTON_ID = 3;
     public static final double ENCODER_CALIBRATION = (63.837/4104.5);
 
     //X-Box
@@ -44,6 +44,7 @@ public class Constants{
     public static final double MaxArea = 0.1;
     public static final double kA = 0.1; 
     public static final double TARGET_ANGLE = 1;
+    public static final double TARGET_ANGLE_BALL_2 = 75; //Made to keep the angle the robot should turn at to get third ball
     public static final double ULTRASONIC_UNIT_CONVERSION = (10000/45.927);
     public static final double D1 = 1;
    // public static final StartingConfiguration startingConfiguration = StartingConfiguration.Middle;

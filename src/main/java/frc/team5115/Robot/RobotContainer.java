@@ -11,11 +11,13 @@ import frc.team5115.Commands.Subsystems.Limelight.Update;
 import frc.team5115.Commands.Subsystems.Shooter.DelayShootGroup1;
 import frc.team5115.Commands.Subsystems.Shooter.ReverseFeeder;
 import frc.team5115.Commands.Subsystems.Shooter.Auto.DelayShootGroupAuto;
+import frc.team5115.Commands.Subsystems.Climber.*;
 import frc.team5115.Commands.*;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.team5115.Commands.NewAuto.AutoCommandGroup;
 import frc.team5115.Commands.NewAuto.Adjust.AdjustDistance;
+import frc.team5115.Commands.NewAuto.Adjust.AdjustDriveCommandGroup;
 
 public class RobotContainer {
 
@@ -63,7 +65,7 @@ public class RobotContainer {
 
         new JoystickButton(joy, 9).whileHeld(new InstantCommand(drivetrain::oliviaMode)).whenReleased(new InstantCommand(drivetrain::adultMode));
    
-        //new JoystickButton(joy, 10).whileHeld(new AdjustDistance(drivetrain, camera)).whenReleased(new InstantCommand(drivetrain::letGo));
+        new JoystickButton(joy, 10).whenPressed(new AdjustDriveCommandGroup(drivetrain, camera));
 
     }
 

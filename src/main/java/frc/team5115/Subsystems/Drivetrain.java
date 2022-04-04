@@ -48,6 +48,7 @@ public class Drivetrain extends SubsystemBase{
     private Timer timer;
    // public double xAngle;
     //public double detector;
+    // USE GYRO TO MEASURE THE ANGLE, ONCE REACHES 105/75 degrees, Move forward x feet, and then shoooooot
  
     
     public Drivetrain() {
@@ -70,7 +71,7 @@ public class Drivetrain extends SubsystemBase{
 
         //xAngle = tx.getDouble(0); 
         //detector = ty.getDOuble(0;
-
+        //DO NAVX
         throttle = 1;
         
     }
@@ -164,8 +165,16 @@ public class Drivetrain extends SubsystemBase{
         } 
 
     public void AdjustAngle(){
-        double xangle = -tx.getDouble(0); 
+        DistanceDetectionAverage();
+        double xangle;
         double detector = tv.getDouble(0);
+        if(detector == 1){
+            xangle = -(tx.getDouble(0)+0.5); 
+
+        }
+        else{
+             xangle = 0; 
+        }
         leftSpd = -xangle*kD;
         if(leftSpd > 0.3){
             leftSpd = 0.3;
@@ -188,7 +197,7 @@ public class Drivetrain extends SubsystemBase{
     }
 
     public double getX(){
-        return tx.getDouble(0);
+        return (tx.getDouble(0)+0.5);
     }
 
     public double getY(){

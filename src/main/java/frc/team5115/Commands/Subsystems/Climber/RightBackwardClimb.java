@@ -1,33 +1,42 @@
 package frc.team5115.Commands.Subsystems.Climber;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team5115.Subsystems.*;
+import edu.wpi.first.wpilibj.Timer;
 
-public class RightBackwardClimb extends CommandBase {
-    Drivetrain drivetrain;
+public class RightBackwardClimb extends CommandBase{
+    Climber climber;
+    Timer timer;
 
-      
- 
-    public RightBackwardClimb(Drivetrain drivetrain) {
-        this.drivetrain = drivetrain;
+    public RightBackwardClimb(Climber right){
+        climber = right;
     }
 
-    @Override
-        public void initialize(){
-        }
-
-    @Override
-        public void execute() {
+    public void execute(){
+        if(climber.getRightLimit() == false){
+            climber.nogodirectionright = "null";
             
         }
-
-    @Override 
-        public void end(boolean interputed){
-            
+      
+        if(climber.nogodirectionright == "fwdr"){
+            climber.rightStop();
+                
         }
-
-    @Override
-        public boolean isFinished() {
+        else{
+            climber.rightForwardClimb();
+        }
+        System.out.println(climber.nogodirectionright);
+    }        
+    
+    public boolean isFinished(){
+        if(climber.getRightLimit()&climber.nogodirectionright=="null"){
+            climber.nogodirectionright = "fwdr";
+            return true;
+        }
+        else{
             return false;
         }
+    }
+
+    
 }
+    
