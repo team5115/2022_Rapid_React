@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.team5115.Commands.Stopeverything;
 import frc.team5115.Commands.NewAuto.Adjust.AdjustDriveCommandGroup;
 import frc.team5115.Commands.NewAuto.AdjustSubsitute.DriveToPoint;
+import frc.team5115.Commands.NewAuto.BallFinder.AdjustAngleToSecondBall;
 import frc.team5115.Commands.NewAuto.BallFinder.AdjustDistanceToBall;
 import frc.team5115.Subsystems.*;
 import frc.team5115.Commands.NewAuto.Adjust.AdjustDriveCommandGroup;
@@ -30,7 +31,14 @@ public class AutoCommandGroup extends SequentialCommandGroup {
           new AdjustDriveCommandGroup(drivetrain, camera),
           //Substitute for limelight code
           //new DriveToPoint(drivetrain),
-          new DelayShootGroupAuto(intake, feeder, shooter));
+          new DelayShootGroupAuto(intake, feeder, shooter)
+          //new AdjustAngleToSecondBall(drivetrain),
+          //new AdjustDistanceToBall(drivetrain, intake),
+          //new AdjustDriveCommandGroup(drivetrain, camera),
+          //new DelayShootGroupAuto(intake, feeder, shooter)
+          
+          );
+          
     }
 
 }

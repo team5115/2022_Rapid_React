@@ -32,28 +32,30 @@ public class AdjustAngleToSecondBall extends CommandBase {
 
     @Override
         public void execute() {
-            drivetrain.AdjustAngle();
-            System.out.print("adjust angle x: " + drivetrain.getX());
-            NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
+            drivetrain.AdjustAngle2();
+            System.out.print("adjust angle x: " + drivetrain.getNAVX());
         }
 
     @Override 
         public void end(boolean interputed){
-            System.out.println("adjust angle is finished");
+            System.out.println("adjust angle 2 is finished");
         }
 
     @Override
         public boolean isFinished() {
             if(timer.get()> 0.5){
-            if(Math.abs(drivetrain.getX()) < TARGET_ANGLE_BALL_2){
+                //return true;
+            if(Math.abs(drivetrain.getNAVX()) < Constants.TARGET_ANGLE_BALL_2){
                 return true;
             }
             else{
                 return false;
             }
+        
+        
         }
         else{
             return false;
         }
-        }
+    }
 }

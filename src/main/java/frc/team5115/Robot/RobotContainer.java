@@ -22,6 +22,7 @@ import frc.team5115.Commands.NewAuto.Adjust.AdjustDriveCommandGroup;
 public class RobotContainer {
 
     public Drivetrain drivetrain;
+    public Pneumatics pneumatics;
     public Intake intake;
     public Shooter shooter;
     public Feeder feeder;
@@ -35,9 +36,11 @@ public class RobotContainer {
     public RobotContainer() {
         drivetrain = new Drivetrain();
         intake = new Intake();
+
         shooter = new Shooter();
         feeder = new Feeder();
         climber = new Climber();
+        pneumatics = new Pneumatics();
         camera = new Camera();
 
         autocommandgroup = new AutoCommandGroup(intake, feeder, shooter, drivetrain, camera);
@@ -60,8 +63,11 @@ public class RobotContainer {
         new JoystickButton(joy, RIGHT_CLIMBER_UP_BUTTON_ID).whileHeld(new InstantCommand(climber::rightForwardClimb)).whenReleased(new InstantCommand(climber::rightStop));
         new JoystickButton(joy, LEFT_CLIMBER_DOWN_BUTTON_ID).whileHeld(new InstantCommand(climber::leftReverseClimb)).whenReleased(new InstantCommand(climber::leftStop));
         new JoystickButton(joy, RIGHT_CLIMBER_DOWN_BUTTON_ID).whileHeld(new InstantCommand(climber::rightReverseClimb)).whenReleased(new InstantCommand(climber::rightStop));
-      //  new JoystickButton(joy, 7).whileHeld(new InstantCommand(intake::reverseIntake(-.25)).alongWith(new InstantCommand(feeder::reverseFeeder))).whenReleased(new Stopeverything(intake, feeder, shooter));
-        new JoystickButton(joy, 8).whenPressed(new ReverseFeeder(intake, feeder));
+        //new JoystickButton(joy, 7).whileHeld(new InstantCommand(intake::reverseIntake(-.25)).alongWith(new InstantCommand(feeder::reverseFeeder))).whenReleased(new Stopeverything(intake, feeder, shooter));
+        //new JoystickButton(joy, 8).whenPressed(new ReverseFeeder(intake, feeder));
+
+        new JoystickButton(joy, 1).whenPressed(new InstantCommand(pneumatics::forward)).whenReleased(new InstantCommand(pneumatics::stop));
+        new JoystickButton(joy, 2).whenPressed(new InstantCommand(pneumatics::backward)).whenReleased(new InstantCommand(pneumatics::stop));
 
         new JoystickButton(joy, 9).whileHeld(new InstantCommand(drivetrain::oliviaMode)).whenReleased(new InstantCommand(drivetrain::adultMode));
    

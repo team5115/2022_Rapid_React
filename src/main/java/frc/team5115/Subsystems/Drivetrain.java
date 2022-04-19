@@ -12,7 +12,10 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
+
+import com.kauailabs.navx.frc.AHRS;
 
 import static frc.team5115.Constants.*;
 
@@ -33,6 +36,7 @@ public class Drivetrain extends SubsystemBase{
     public NetworkTableEntry tv;
 
     private double rightSpd;
+    private AHRS Gyro;
     private double leftSpd;
 
     public double d;
@@ -61,7 +65,9 @@ public class Drivetrain extends SubsystemBase{
         balldetected = false;
 
         timer = new Timer();
+        Gyro = new AHRS(SPI.Port.kMXP);
         timer.reset();
+        Gyro.reset();
         
         
         frontLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
@@ -196,8 +202,30 @@ public class Drivetrain extends SubsystemBase{
         System.out.println("right speed "+ rightSpd);
     }
 
+    public void AdjustAngle2(){
+        double xangle = getNAVX();
+
+        leftSpd = -(TARGET_ANGLE_BALL_2 - xangle)*kD;
+        if(leftSpd > 0.3){
+            leftSpd = 0.3;
+            System.out.println("capping speed");
+        }
+        if(leftSpd < -0.3){
+            leftSpd = -0.3;
+            System.out.println("capping speed");
+        }
+        rightSpd = leftSpd;
+
+        plugAndChugDrive(leftSpd, rightSpd, leftSpd, rightSpd);
+
+    }
+
     public double getX(){
         return (tx.getDouble(0)+0.5);
+    }
+
+    public double getNAVX(){
+        return Gyro.getYaw();
     }
 
     public double getY(){
