@@ -37,6 +37,13 @@ public class Constants{
     public static byte PILOT_X_AXIS_ID= 0;
     public static byte PILOT_Y_AXIS_ID = 1;
 
+
+    //PID 
+    public static final double kp = 0.1;
+    public static final double kd = 0.1;
+    public static final double ki = 0.1;
+
+
     //auto
     public static final double kD = 0.25;
     public static final double hD = 0.044;

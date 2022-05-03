@@ -1,6 +1,5 @@
 package frc.team5115.Commands.Subsystems.Shooter.Auto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.team5115.Commands.Subsystems.Shooter.ReverseFeeder;
 import frc.team5115.Commands.Subsystems.Shooter.ReverseFeederAuto;
 import frc.team5115.Commands.Subsystems.Shooter.Shoot;
 import frc.team5115.Subsystems.*;

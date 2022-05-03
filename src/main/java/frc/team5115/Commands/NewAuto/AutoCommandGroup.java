@@ -4,7 +4,6 @@ import frc.team5115.Commands.Subsystems.Shooter.Auto.DelayShootGroupAuto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.team5115.Commands.Stopeverything;
 import frc.team5115.Commands.NewAuto.Adjust.AdjustDriveCommandGroup;
-import frc.team5115.Commands.NewAuto.AdjustSubsitute.DriveToPoint;
 import frc.team5115.Commands.NewAuto.BallFinder.AdjustAngleToSecondBall;
 import frc.team5115.Commands.NewAuto.BallFinder.AdjustDistanceToBall;
 import frc.team5115.Subsystems.*;

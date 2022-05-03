@@ -244,10 +244,12 @@ public class Drivetrain extends SubsystemBase{
 
     public void oliviaMode(){
         throttle = 0.3;
+        System.out.println("slow mode");
     }
 
     public void adultMode(){
         throttle =1;
+        System.out.println("speed mode");
     }
 
     // public double getDistanceFromHub(){

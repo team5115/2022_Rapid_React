@@ -1,5 +1,4 @@
 package frc.team5115.Commands.Subsystems.Shooter.Auto;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team5115.Subsystems.Intake;
 import frc.team5115.Subsystems.*;
